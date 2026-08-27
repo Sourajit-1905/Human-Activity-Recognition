@@ -1,0 +1,166 @@
+har-activity-recognition/
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml                          # GitHub Actions: lint + test on push
+│
+├── configs/
+│   ├── base_config.yaml                    # Shared hyperparameters (seed, data paths)
+│   ├── mlp_config.yaml                     # MLP-specific hyperparameters
+│   ├── cnn_config.yaml                     # 1D CNN hyperparameters
+│   ├── lstm_config.yaml                    # LSTM hyperparameters
+│   ├── gru_config.yaml                     # GRU hyperparameters
+│   └── deepconvlstm_config.yaml            # DeepConvLSTM hyperparameters
+│
+├── data/
+│   ├── raw/                                # Original downloaded dataset (never modified)
+│   │   └── UCI HAR Dataset/
+│   │       ├── train/
+│   │       │   ├── Inertial Signals/       # Raw 9-channel sensor files
+│   │       │   ├── X_train.txt
+│   │       │   ├── y_train.txt
+│   │       │   └── subject_train.txt
+│   │       ├── test/
+│   │       │   ├── Inertial Signals/
+│   │       │   ├── X_test.txt
+│   │       │   ├── y_test.txt
+│   │       │   └── subject_test.txt
+│   │       └── activity_labels.txt
+│   │
+│   ├── processed/                          # Preprocessed, normalized arrays (NumPy .npy)
+│   │   ├── X_train.npy
+│   │   ├── X_val.npy
+│   │   ├── X_test.npy
+│   │   ├── y_train.npy
+│   │   ├── y_val.npy
+│   │   └── y_test.npy
+│   │
+│   └── splits/
+│       └── split_metadata.json             # Records random seed, split sizes, class dist.
+│
+├── notebooks/
+│   ├── 01_eda.ipynb                        # Exploratory Data Analysis
+│   ├── 02_preprocessing.ipynb              # Normalization, split, leakage check
+│   ├── 03_baseline_mlp.ipynb               # MLP model: train + evaluate
+│   ├── 04_cnn_1d.ipynb                     # 1D CNN model: train + evaluate
+│   ├── 05_lstm.ipynb                       # LSTM model: train + evaluate
+│   ├── 06_gru.ipynb                        # GRU model: train + evaluate
+│   ├── 07_deepconvlstm.ipynb               # Hybrid model: train + evaluate
+│   ├── 08_experiments_comparison.ipynb      # W&B sweeps + analysis
+│   └── 09_final_evaluation.ipynb           # Test-set eval, confusion matrix, error analysis
+│
+├── src/
+│   ├── __init__.py
+│   │
+│   ├── data/
+│   │   ├── __init__.py
+│   │   ├── loader.py                       # Raw data loading from UCI HAR files
+│   │   ├── preprocessor.py                 # Normalization, windowing, scaler save/load
+│   │   └── dataset.py                      # tf.data.Dataset / torch.utils.data.Dataset
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── base_model.py                   # Abstract base class: build(), train(), evaluate()
+│   │   ├── mlp.py                          # MLP architecture
+│   │   ├── cnn_1d.py                       # 1D CNN architecture
+│   │   ├── lstm.py                         # Stacked LSTM architecture
+│   │   ├── gru.py                          # Stacked GRU architecture
+│   │   └── deepconvlstm.py                 # Hybrid DeepConvLSTM architecture
+│   │
+│   ├── training/
+│   │   ├── __init__.py
+│   │   ├── trainer.py                      # Training loop, callbacks, W&B logging
+│   │   ├── callbacks.py                    # Custom Keras/PyTorch callbacks
+│   │   └── scheduler.py                    # LR scheduling utilities
+│   │
+│   ├── evaluation/
+│   │   ├── __init__.py
+│   │   ├── metrics.py                      # Accuracy, F1, ROC-AUC, confusion matrix
+│   │   └── error_analysis.py               # Misclassification inspection utilities
+│   │
+│   └── utils/
+│       ├── __init__.py
+│       ├── config.py                       # YAML config loader (OmegaConf / PyYAML)
+│       ├── logger.py                       # Logging setup (Python logging + W&B)
+│       ├── seed.py                         # Reproducibility: set_seed(42)
+│       └── visualization.py               # Reusable plot functions (signals, CM, curves)
+│
+├── experiments/
+│   ├── run_baseline.py                     # CLI: python experiments/run_baseline.py
+│   ├── run_cnn.py
+│   ├── run_lstm.py
+│   ├── run_gru.py
+│   ├── run_deepconvlstm.py
+│   └── sweep_wandb.py                      # W&B sweep launcher
+│
+├── artifacts/
+│   ├── models/                             # Saved model weights
+│   │   ├── mlp_best.keras
+│   │   ├── cnn_best.keras
+│   │   ├── lstm_best.keras
+│   │   ├── gru_best.keras
+│   │   ├── deepconvlstm_best.keras
+│   │   └── deepconvlstm_final.tflite       # TFLite export for deployment
+│   │
+│   ├── scalers/
+│   │   └── standard_scaler.pkl             # Fitted scaler (joblib) — used at inference
+│   │
+│   └── results/
+│       ├── model_comparison.csv            # All model metrics in one table
+│       └── sweep_results.csv               # Hyperparameter sweep summary
+│
+├── reports/
+│   ├── figures/                            # All saved plots (.png / .svg)
+│   │   ├── eda_signal_plots.png
+│   │   ├── class_distribution.png
+│   │   ├── confusion_matrix_deepconvlstm.png
+│   │   ├── roc_curves.png
+│   │   ├── training_curves_comparison.png
+│   │   └── architecture_comparison_bar.png
+│   │
+│   └── model_card.md                       # Model card: purpose, metrics, limitations
+│
+├── dashboard/                              # Frontend dashboard (React)
+│   ├── public/
+│   │   └── index.html
+│   ├── src/
+│   │   ├── App.jsx                         # Root component, routing
+│   │   ├── index.jsx                       # Entry point
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Overview.jsx                # Project summary + key numbers
+│   │   │   ├── DataExploration.jsx         # EDA charts and signal visualizations
+│   │   │   ├── ModelComparison.jsx         # Architecture comparison bar/radar chart
+│   │   │   ├── ExperimentTracker.jsx       # Hyperparameter sweep results table
+│   │   │   ├── Evaluation.jsx              # Confusion matrix + per-class F1
+│   │   │   └── LiveDemo.jsx                # Upload sensor window → get prediction
+│   │   │
+│   │   ├── components/
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── MetricCard.jsx
+│   │   │   ├── ConfusionMatrix.jsx
+│   │   │   ├── TrainingCurveChart.jsx
+│   │   │   ├── ArchitectureCard.jsx
+│   │   │   └── ActivityBadge.jsx
+│   │   │
+│   │   ├── data/
+│   │   │   └── results.json                # Exported model results (fed into dashboard)
+│   │   │
+│   │   └── styles/
+│   │       └── global.css
+│   │
+│   ├── package.json
+│   └── vite.config.js
+│
+├── tests/
+│   ├── test_loader.py                      # Unit tests for data loading
+│   ├── test_preprocessor.py                # Tests for normalization + leakage check
+│   ├── test_models.py                      # Shape tests for all model architectures
+│   └── test_metrics.py                     # Tests for metric computation functions
+│
+├── .env.example                            # WANDB_API_KEY= (never commit real keys)
+├── .gitignore
+├── requirements.txt                        # Python dependencies (pinned versions)
+├── requirements-dev.txt                    # Dev dependencies: pytest, black, flake8
+├── setup.py                                # Makes src/ importable as a package
+└── README.md                               # Setup instructions, usage, results summary
