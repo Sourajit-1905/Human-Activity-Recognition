@@ -107,16 +107,13 @@ har-activity-recognition/
 │   │
 │   └── results/
 │       ├── model_comparison.csv            # All model metrics in one table
-│       └── sweep_results.csv               # Hyperparameter sweep summary
+│       ├── sweep_results.csv               # Hyperparameter sweep summary
+│       └── mlp_results.json                # The Results of the MLP Model
 │
 ├── reports/
 │   ├── figures/                            # All saved plots (.png / .svg)
-│   │   ├── eda_signal_plots.png
-│   │   ├── class_distribution.png
-│   │   ├── confusion_matrix_deepconvlstm.png
-│   │   ├── roc_curves.png
-│   │   ├── training_curves_comparison.png
-│   │   └── architecture_comparison_bar.png
+│   │   ├── mlp_training_curves.png
+│   │   └── mlp_confusion_matrix.png
 │   │
 │   └── model_card.md                       # Model card: purpose, metrics, limitations
 │
