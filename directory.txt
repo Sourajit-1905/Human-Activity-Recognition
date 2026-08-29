@@ -108,12 +108,15 @@ har-activity-recognition/
 │   └── results/
 │       ├── model_comparison.csv            # All model metrics in one table
 │       ├── sweep_results.csv               # Hyperparameter sweep summary
-│       └── mlp_results.json                # The Results of the MLP Model
+│       ├── mlp_results.json                # The Results of the MLP Model
+|       └── cnn_results.json                # The Results of the CNN Model
 │
 ├── reports/
 │   ├── figures/                            # All saved plots (.png / .svg)
 │   │   ├── mlp_training_curves.png
-│   │   └── mlp_confusion_matrix.png
+│   │   ├── mlp_confusion_matrix.png
+|   |   ├── cnn_training_curves.png
+|   |   └── cnn_confusion_matrix.png
 │   │
 │   └── model_card.md                       # Model card: purpose, metrics, limitations
 │
