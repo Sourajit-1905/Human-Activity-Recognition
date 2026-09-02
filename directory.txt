@@ -45,8 +45,8 @@ har-activity-recognition/
 │   ├── 04_cnn_1d.ipynb                     # 1D CNN model: train + evaluate
 │   ├── 05_lstm.ipynb                       # LSTM model: train + evaluate
 │   ├── 06_gru.ipynb                        # GRU model: train + evaluate
-│   ├── 07_deepconvlstm.ipynb               # Hybrid model: train + evaluate
-│   ├── 08_experiments_comparison.ipynb      # W&B sweeps + analysis
+│   ├── 07_deepconvGRU.ipynb                # Hybrid model: train + evaluate (CNN + GRU)
+│   ├── 08_experiments_comparison.ipynb     # W&B sweeps + analysis
 │   └── 09_final_evaluation.ipynb           # Test-set eval, confusion matrix, error analysis
 │
 ├── src/
@@ -99,7 +99,7 @@ har-activity-recognition/
 │   │   ├── cnn_best.keras
 │   │   ├── lstm_best.keras
 │   │   ├── gru_best.keras
-│   │   ├── deepconvlstm_best.keras
+│   │   ├── convgru_best.keras
 │   │   └── deepconvlstm_final.tflite       # TFLite export for deployment
 │   │
 │   ├── scalers/
@@ -111,7 +111,8 @@ har-activity-recognition/
 │       ├── mlp_results.json                # The Results of the MLP Model
 │       ├── cnn_results.json                # The Results of the CNN Model
 │       ├── lstm_results.json               # The Results of the LSTM Model
-│       └── gru_results.json                # The Results of the GRU Model
+│       ├── gru_results.json                # The Results of the GRU Model
+│       └── convgru_results.json            # The Results of The Deep Convolution and GRU Combined Results
 │
 ├── reports/
 │   ├── figures/                            # All saved plots (.png / .svg)
@@ -122,7 +123,10 @@ har-activity-recognition/
 │   │   ├── lstm_training_curves.png
 │   │   ├── lstm_confusion_matrix.png
 │   │   ├── gru_training_curves.png
-│   │   └── gru_confusion_matrix.png
+│   │   ├── gru_confusion_matrix.png
+│   │   ├── deepconvGRU_training_curves.png
+│   │   └── deepconvGRU_confusion_matrix.png
+│   │
 │   │
 │   └── model_card.md                       # Model card: purpose, metrics, limitations
 │
