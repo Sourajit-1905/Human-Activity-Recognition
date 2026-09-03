@@ -48,7 +48,6 @@ data/processed/
 data/splits/
 *.npy
 *.npz
-*.csv
 *.tsv
 *.parquet
 *.feather
@@ -61,8 +60,6 @@ data/splits/
 !data/raw/.gitkeep
 !data/processed/.gitkeep
 !data/splits/.gitkeep
-
-# Model artifacts (large binary files — use W&B Artifacts or DVC)
 
 artifacts/models/
 artifacts/scalers/

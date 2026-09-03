@@ -125,7 +125,15 @@ har-activity-recognition/
 │   │   ├── gru_training_curves.png
 │   │   ├── gru_confusion_matrix.png
 │   │   ├── deepconvGRU_training_curves.png
-│   │   └── deepconvGRU_confusion_matrix.png
+│   │   ├── deepconvGRU_confusion_matrix.png
+│   │   ├── architecture_comparison_bar.png
+│   │   ├── macro_f1_comparison.png
+│   │   ├── parameter_efficiency.png
+│   │   ├── radar_chart.png
+│   │   ├── training_curves_comparison.png
+│   │   └── training_time_comparison.png
+│   │
+│   │
 │   │
 │   │
 │   └── model_card.md                       # Model card: purpose, metrics, limitations
