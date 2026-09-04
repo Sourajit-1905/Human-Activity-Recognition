@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy:      #0F172A;
+  --surface:   #1E293B;
+  --surface2:  #243044;
+  --accent:    #2563EB;
+  --muted:     #64748B;
+  --border:    #334155;
+  --text:      #F1F5F9;
+  --text-muted:#94A3B8;
+
+  /* Model colors — consistent across all charts */
+  --color-mlp:          #64B5F6;
+  --color-cnn:          #81C784;
+  --color-lstm:         #E57373;
+  --color-gru:          #FF8A65;
+  --color-convgru:      #BA68C8;
+  --color-deepconvlstm: #9575CD;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--navy);
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+/* Recharts tooltip dark theme */
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background-color: var(--surface2) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  color: var(--text) !important;
+}
