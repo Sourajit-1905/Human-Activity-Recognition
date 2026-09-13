@@ -1,179 +1,138 @@
-// src/App.jsx
-
+import { useState } from 'react'
 import { useHAR } from './context/HARContext'
+import Sidebar from './components/Sidebar'
+import Overview        from './pages/Overview'
+import DataExploration from './pages/DataExploration'
+import ModelComparison from './pages/ModelComparison'
+import ExperimentTracker from './pages/ExperimentTracker'
+import Evaluation      from './pages/Evaluation'
+import LiveDemo        from './pages/LiveDemo'
+import { NAV_ITEMS }   from './constants'
 
-function App() {
-  const {
-    data,
-    models,
-    bestModel,
-    worstModel,
-    chartData,
-    helpers,
-    isLoading,
-    error
-  } = useHAR()
+const PAGES = {
+  overview    : Overview,
+  data        : DataExploration,
+  comparison  : ModelComparison,
+  experiments : ExperimentTracker,
+  evaluation  : Evaluation,
+  demo        : LiveDemo,
+}
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-navy flex items-center justify-center">
-        <div className="text-center space-y-3">
-          <div className="w-8 h-8 border-2 border-accent border-t-transparent
-                          rounded-full animate-spin mx-auto" />
-          <p className="text-textsecondary text-sm">Loading results...</p>
-        </div>
-      </div>
-    )
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-navy flex items-center justify-center">
-        <div className="bg-surface border border-red-400/20 rounded-xl p-6 max-w-md">
-          <p className="text-red-400 font-medium mb-2">Data Error</p>
-          <p className="text-textsecondary text-sm">{error}</p>
-        </div>
-      </div>
-    )
-  }
-
+function LoadingScreen() {
   return (
-    <div className="min-h-screen bg-navy p-8">
-      <div className="max-w-2xl mx-auto space-y-6">
-
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-block px-3 py-1 rounded-full text-xs font-medium
-                          bg-accent/10 text-accent border border-accent/20">
-            STAGE D2 — DATA LAYER TEST
-          </div>
-          <h1 className="text-3xl font-bold text-textprimary">
-            HAR Dashboard
-          </h1>
-        </div>
-
-        {/* Headline metrics */}
-        <div className="grid grid-cols-3 gap-3">
-          {[
-            {
-              label: "Best Model",
-              value: bestModel,
-              sub  : helpers.formatAccuracy(
-                data.test_results[bestModel]?.test_accuracy) + " test"
-            },
-            {
-              label: "Models Trained",
-              value: models.length,
-              sub  : "architectures"
-            },
-            {
-              label: "Dataset",
-              value: "UCI HAR",
-              sub  : "10,299 samples"
-            },
-          ].map(({ label, value, sub }) => (
-            <div key={label}
-                 className="bg-surface border border-border rounded-xl p-4 text-center">
-              <p className="text-textprimary font-bold text-xl">{value}</p>
-              <p className="text-textsecondary text-xs mt-1">{label}</p>
-              <p className="text-muted text-xs">{sub}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Model results from context */}
-        <div className="bg-surface border border-border rounded-xl p-5">
-          <p className="text-textsecondary text-xs uppercase tracking-wide mb-4">
-            Test Results — loaded from results.json
-          </p>
-          <div className="space-y-3">
-            {chartData.accuracy?.map(row => (
-              <div key={row.model}
-                   className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 rounded-full flex-shrink-0"
-                       style={{ backgroundColor: row.color }} />
-                  <span className="text-textprimary text-sm font-medium">
-                    {row.model}
-                  </span>
-                </div>
-                <div className="flex items-center gap-6 text-sm font-mono">
-                  <span className="text-textsecondary">
-                    Val: {row.valAccuracy}%
-                  </span>
-                  <span className={helpers.getAccuracyColor(
-                    data.test_results[row.model]?.test_accuracy
-                  )}>
-                    Test: {row.testAccuracy}%
-                  </span>
-                  <span className={helpers.getGapSeverity(
-                    data.test_results[row.model]?.generalization_gap
-                  )}>
-                    Gap: {helpers.formatGap(
-                      data.test_results[row.model]?.generalization_gap
-                    )}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Helper functions verification */}
-        <div className="bg-surface border border-border rounded-xl p-5">
-          <p className="text-textsecondary text-xs uppercase tracking-wide mb-4">
-            Helper functions — verified
-          </p>
-          <div className="grid grid-cols-2 gap-2 font-mono text-xs">
-            {[
-              ["formatAccuracy(0.9576)",  helpers.formatAccuracy(0.9576)],
-              ["formatParams(341382)",    helpers.formatParams(341382)],
-              ["formatParams(1861126)",   helpers.formatParams(1861126)],
-              ["formatTime(345.9)",       helpers.formatTime(345.9)],
-              ["formatTime(479.4)",       helpers.formatTime(479.4)],
-              ["formatTime(11.9)",        helpers.formatTime(11.9)],
-              ["formatGap(0.0370)",       helpers.formatGap(0.0370)],
-              ["getModelColor('GRU')",    helpers.getModelColor('GRU')],
-            ].map(([fn, result]) => (
-              <div key={fn}
-                   className="flex justify-between items-center
-                              bg-navy rounded-lg px-3 py-2">
-                <span className="text-muted">{fn}</span>
-                <span className="text-accent">{result}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Demo samples verification */}
-        <div className="bg-surface border border-border rounded-xl p-5">
-          <p className="text-textsecondary text-xs uppercase tracking-wide mb-4">
-            Live Demo samples — {chartData.demoSamples?.length} pre-loaded
-          </p>
-          <div className="space-y-2">
-            {chartData.demoSamples?.slice(0, 3).map(sample => (
-              <div key={sample.id}
-                   className="flex items-center justify-between
-                              bg-navy rounded-lg px-3 py-2 text-xs">
-                <span className="text-textprimary">
-                  Sample {sample.id} — {sample.trueActivity}
-                </span>
-                <span className={sample.correct
-                  ? "text-green-400" : "text-red-400"}>
-                  {sample.correct ? "✓ Correct" : "✗ Wrong"}
-                  {" "}({(sample.confidence * 100).toFixed(1)}%)
-                </span>
-              </div>
-            ))}
-            <p className="text-muted text-xs text-center pt-1">
-              + {chartData.demoSamples?.length - 3} more samples
-            </p>
-          </div>
-        </div>
-
+    <div className="min-h-screen bg-navy flex items-center justify-center">
+      <div className="text-center space-y-4">
+        <div className="w-10 h-10 border-2 border-accent border-t-transparent
+                        rounded-full animate-spin mx-auto" />
+        <p className="text-textsecondary text-sm">Loading results...</p>
       </div>
     </div>
   )
 }
 
-export default App
+function ErrorScreen({ message }) {
+  return (
+    <div className="min-h-screen bg-navy flex items-center justify-center p-8">
+      <div className="bg-surface border border-red-400/20 rounded-xl
+                      p-8 max-w-md text-center space-y-3">
+        <div className="w-12 h-12 bg-red-400/10 rounded-full flex items-center
+                        justify-center mx-auto">
+          <svg className="w-6 h-6 text-red-400" fill="none"
+               viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667
+                     1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34
+                     16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+        </div>
+        <p className="text-red-400 font-bold">Data Error</p>
+        <p className="text-textsecondary text-sm">{message}</p>
+        <p className="text-muted text-xs">
+          Check that results.json exists in src/data/
+        </p>
+      </div>
+    </div>
+  )
+}
+
+export default function App() {
+  const [activePage, setActivePage] = useState('overview')
+  const { isLoading, error, bestModel, helpers, data } = useHAR()
+
+  if (isLoading) return <LoadingScreen />
+  if (error)     return <ErrorScreen message={error} />
+
+  const ActivePage = PAGES[activePage] || Overview
+  const activeNav  = NAV_ITEMS.find(n => n.id === activePage)
+
+  return (
+    <div className="min-h-screen bg-navy flex">
+
+      {/* ── Sidebar ── */}
+      <Sidebar
+        activePage={activePage}
+        onNavigate={setActivePage}
+      />
+
+      {/* ── Main content ── */}
+      <div className="flex-1 ml-64 flex flex-col min-h-screen">
+
+        {/* Header bar */}
+        <header className="sticky top-0 z-10 bg-navy/80 backdrop-blur-sm
+                           border-b border-border px-8 py-4
+                           flex items-center justify-between">
+
+          {/* Page title */}
+          <div>
+            <p className="text-textsecondary text-xs uppercase
+                          tracking-wider mb-0.5">
+              HAR Activity Recognition
+            </p>
+            <h1 className="text-textprimary font-bold text-lg">
+              {activeNav?.label || "Dashboard"}
+            </h1>
+          </div>
+
+          {/* Best model pill */}
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 bg-surface
+                            border border-border rounded-full
+                            px-4 py-2">
+              <div className="w-2 h-2 rounded-full bg-green-400
+                              animate-pulse" />
+              <span className="text-textsecondary text-xs">
+                Best Model
+              </span>
+              <span className="text-textprimary text-xs font-bold">
+                {bestModel}
+              </span>
+              <span className="text-green-400 text-xs font-mono">
+                {helpers.formatAccuracy(
+                  data?.test_results?.[bestModel]?.test_accuracy
+                )}
+              </span>
+            </div>
+          </div>
+
+        </header>
+
+        {/* Page content */}
+        <main className="flex-1 p-8">
+          <ActivePage />
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t border-border px-8 py-4
+                           flex items-center justify-between">
+          <p className="text-muted text-xs">
+            HAR Activity Recognition — UCI HAR Dataset
+          </p>
+          <p className="text-muted text-xs">
+            5 Models · 10,299 Samples · 6 Activities
+          </p>
+        </footer>
+
+      </div>
+    </div>
+  )
+}

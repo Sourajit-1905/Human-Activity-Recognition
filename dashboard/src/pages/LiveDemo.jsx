@@ -1,1 +1,10 @@
-export default function LiveDemo() { return null; }
+export default function LiveDemo() {
+  return (
+    <div className="flex items-center justify-center h-64">
+      <div className="text-center space-y-2">
+        <p className="text-textprimary font-bold text-lg">Live Demo</p>
+        <p className="text-textsecondary text-sm">Building in Stage D9</p>
+      </div>
+    </div>
+  )
+}

@@ -1,1 +1,10 @@
-export default function Evaluation() { return null; }
+export default function Evaluation() {
+  return (
+    <div className="flex items-center justify-center h-64">
+      <div className="text-center space-y-2">
+        <p className="text-textprimary font-bold text-lg">Evaluation</p>
+        <p className="text-textsecondary text-sm">Building in Stage D8</p>
+      </div>
+    </div>
+  )
+}
