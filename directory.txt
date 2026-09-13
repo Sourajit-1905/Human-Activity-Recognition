@@ -164,8 +164,18 @@ har-activity-recognition/
 │   │   ├── data/
 │   │   │   └── results.json                # Exported model results (fed into dashboard)
 │   │   │
-│   │   └── styles/
-│   │       └── global.css
+│   │   │   styles/
+│   │   │   └── global.css
+│   │   │
+│   │   ├── context/
+│   │   │   └── HARContext.jsx              # loads data once, provides to entire app
+│   │   │
+│   │   ├── constants/
+│   │   │   └── index.js                    # colors, labels, model names, nav config
+│   │   │
+│   │   └── utils/
+│   │       └── helpers.js                  # formatting and computation functions
+│   │   
 │   │
 │   ├── package.json
 │   ├── vite.config.js
