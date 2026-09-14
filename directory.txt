@@ -91,7 +91,6 @@ har-activity-recognition/
 │   ├── run_lstm.py
 │   ├── run_gru.py
 │   ├── run_deepconvlstm.py
-│   └── sweep_wandb.py                      # W&B sweep launcher
 │
 ├── artifacts/
 │   ├── models/                             # Saved model weights
@@ -189,7 +188,6 @@ har-activity-recognition/
 │   ├── test_models.py                      # Shape tests for all model architectures
 │   └── test_metrics.py                     # Tests for metric computation functions
 │
-├── .env.example                            # WANDB_API_KEY= (never commit real keys)
 ├── .gitignore
 ├── requirements.txt                        # Python dependencies (pinned versions)
 ├── requirements-dev.txt                    # Dev dependencies: pytest, black, flake8
