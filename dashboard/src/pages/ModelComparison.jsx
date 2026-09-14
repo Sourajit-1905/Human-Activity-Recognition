@@ -32,12 +32,12 @@ function SectionHeader({ title, subtitle }) {
 }
 
 const TOOLTIP_STYLE = {
-  backgroundColor: "#243044",
-  border: "1px solid #334155",
-  borderRadius: "8px",
-  color: "#F1F5F9",
-  fontSize: "12px",
-};
+  backgroundColor: '#1A1A1A',
+  border         : '1px solid #2A2A2A',
+  borderRadius   : '8px',
+  color          : '#F1F5F9',
+  fontSize       : '12px',
+}
 
 function AccuracyBarChart({ data, dataKey, title, color = "#2563EB" }) {
   return (
