@@ -1,17 +1,5 @@
 har-activity-recognition/
 │
-├── .github/
-│   └── workflows/
-│       └── ci.yml                          # GitHub Actions: lint + test on push
-│
-├── configs/
-│   ├── base_config.yaml                    # Shared hyperparameters (seed, data paths)
-│   ├── mlp_config.yaml                     # MLP-specific hyperparameters
-│   ├── cnn_config.yaml                     # 1D CNN hyperparameters
-│   ├── lstm_config.yaml                    # LSTM hyperparameters
-│   ├── gru_config.yaml                     # GRU hyperparameters
-│   └── deepconvlstm_config.yaml            # DeepConvLSTM hyperparameters
-│
 ├── data/
 │   ├── raw/                                # Original downloaded dataset (never modified)
 │   │   └── UCI HAR Dataset/
@@ -27,16 +15,14 @@ har-activity-recognition/
 │   │       │   └── subject_test.txt
 │   │       └── activity_labels.txt
 │   │
-│   ├── processed/                          # Preprocessed, normalized arrays (NumPy .npy)
-│   │   ├── X_train.npy
-│   │   ├── X_val.npy
-│   │   ├── X_test.npy
-│   │   ├── y_train.npy
-│   │   ├── y_val.npy
-│   │   └── y_test.npy
-│   │
-│   └── splits/
-│       └── split_metadata.json             # Records random seed, split sizes, class dist.
+│   └── processed/                          # Preprocessed, normalized arrays (NumPy .npy)
+│       ├── X_train.npy
+│       ├── X_val.npy
+│       ├── X_test.npy
+│       ├── y_train.npy
+│       ├── y_val.npy
+│       └── y_test.npy
+│         
 │
 ├── notebooks/
 │   ├── 01_eda.ipynb                        # Exploratory Data Analysis
@@ -49,57 +35,15 @@ har-activity-recognition/
 │   ├── 08_experiments_comparison.ipynb     # W&B sweeps + analysis
 │   └── 09_final_evaluation.ipynb           # Test-set eval, confusion matrix, error analysis
 │
-├── src/
-│   ├── __init__.py
-│   │
-│   ├── data/
-│   │   ├── __init__.py
-│   │   ├── loader.py                       # Raw data loading from UCI HAR files
-│   │   ├── preprocessor.py                 # Normalization, windowing, scaler save/load
-│   │   └── dataset.py                      # tf.data.Dataset / torch.utils.data.Dataset
-│   │
-│   ├── models/
-│   │   ├── __init__.py
-│   │   ├── base_model.py                   # Abstract base class: build(), train(), evaluate()
-│   │   ├── mlp.py                          # MLP architecture
-│   │   ├── cnn_1d.py                       # 1D CNN architecture
-│   │   ├── lstm.py                         # Stacked LSTM architecture
-│   │   ├── gru.py                          # Stacked GRU architecture
-│   │   └── deepconvlstm.py                 # Hybrid DeepConvLSTM architecture
-│   │
-│   ├── training/
-│   │   ├── __init__.py
-│   │   ├── trainer.py                      # Training loop, callbacks, W&B logging
-│   │   ├── callbacks.py                    # Custom Keras/PyTorch callbacks
-│   │   └── scheduler.py                    # LR scheduling utilities
-│   │
-│   ├── evaluation/
-│   │   ├── __init__.py
-│   │   ├── metrics.py                      # Accuracy, F1, ROC-AUC, confusion matrix
-│   │   └── error_analysis.py               # Misclassification inspection utilities
-│   │
-│   └── utils/
-│       ├── __init__.py
-│       ├── config.py                       # YAML config loader (OmegaConf / PyYAML)
-│       ├── logger.py                       # Logging setup (Python logging + W&B)
-│       ├── seed.py                         # Reproducibility: set_seed(42)
-│       └── visualization.py               # Reusable plot functions (signals, CM, curves)
-│
-├── experiments/
-│   ├── run_baseline.py                     # CLI: python experiments/run_baseline.py
-│   ├── run_cnn.py
-│   ├── run_lstm.py
-│   ├── run_gru.py
-│   ├── run_deepconvlstm.py
-│
+│   
 ├── artifacts/
 │   ├── models/                             # Saved model weights
 │   │   ├── mlp_best.keras
 │   │   ├── cnn_best.keras
 │   │   ├── lstm_best.keras
 │   │   ├── gru_best.keras
-│   │   ├── convgru_best.keras
-│   │   └── deepconvlstm_final.tflite       # TFLite export for deployment
+│   │   └── convgru_best.keras
+│   │   
 │   │
 │   ├── scalers/
 │   │   └── standard_scaler.pkl             # Fitted scaler (joblib) — used at inference
@@ -134,7 +78,6 @@ har-activity-recognition/
 │   │
 │   │
 │   │
-│   │
 │   └── model_card.md                       # Model card: purpose, metrics, limitations
 │
 ├── dashboard/                              # Frontend dashboard (React)
@@ -143,6 +86,7 @@ har-activity-recognition/
 │   ├── src/
 │   │   ├── App.jsx                         # Root component, routing
 │   │   ├── index.jsx                       # Entry point
+│   │   ├── App.css
 │   │   │
 │   │   ├── pages/
 │   │   │   ├── Overview.jsx                # Project summary + key numbers

@@ -32,20 +32,54 @@ export default function Sidebar({ activePage, onNavigate }) {
         <div className="flex items-center gap-3 mb-3">
           <div
             className="w-8 h-8 rounded-lg flex items-center
-                  justify-center flex-shrink-0"
-            style={{ backgroundColor: "rgba(255,255,255,0.08)" }}
+                justify-center flex-shrink-0 overflow-hidden"
+            style={{ backgroundColor: "#111111" }}
           >
             <svg
-              className="w-4 h-4 text-textsecondary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 32 32"
+              className="w-8 h-8"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+              <rect width="32" height="32" rx="8" fill="#111111" />
+              <rect
+                x="2"
+                y="20"
+                width="4"
+                height="10"
+                rx="1.5"
+                fill="#FF8A65"
+              />
+              <rect
+                x="8"
+                y="14"
+                width="4"
+                height="16"
+                rx="1.5"
+                fill="#E57373"
+              />
+              <rect
+                x="14"
+                y="17"
+                width="4"
+                height="13"
+                rx="1.5"
+                fill="#BA68C8"
+              />
+              <rect
+                x="20"
+                y="8"
+                width="4"
+                height="22"
+                rx="1.5"
+                fill="#81C784"
+              />
+              <rect
+                x="26"
+                y="12"
+                width="4"
+                height="18"
+                rx="1.5"
+                fill="#64B5F6"
               />
             </svg>
           </div>
