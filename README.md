@@ -1,6 +1,6 @@
 # Human Activity Recognition — Deep Learning Study Project
 
-> **Live Dashboard →** [HAR Dashboard]()  
+> **Live Dashboard →** [HAR Dashboard](https://har-dashboard.onrender.com/)  
 > **LinkedIn →** [Sourajit Paul](https://www.linkedin.com/in/sourajit-paul-347351322/)  
 > **Dataset →** [UCI HAR Dataset](https://archive.ics.uci.edu/dataset/240/human+activity+recognition+using+smartphones)
 
@@ -191,7 +191,7 @@ I built a 6-page interactive React dashboard to present all findings visually:
 | Evaluation          | Test results, confusion matrix, ROC-AUC, error analysis |
 | Live Demo           | Interactive prediction simulation with signal viewer    |
 
-**Live Dashboard →** [HAR Dashboard]()
+**Live Dashboard →** [HAR Dashboard](https://har-dashboard.onrender.com/)
 
 ---
 
